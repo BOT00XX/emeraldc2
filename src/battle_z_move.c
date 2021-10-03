@@ -94,14 +94,14 @@ static const struct SignatureZMove sSignatureZMoves[] =
     {SPECIES_SNORLAX,               ITEM_SNORLIUM_Z,           MOVE_GIGA_IMPACT,         MOVE_PULVERIZING_PANCAKE},
 };
 
-static const u8 sText_ResetStats[] = _("Reset Lowered Stats");
-static const u8 sText_StatsPlus[] = _("+ All Stats");
-static const u8 sText_StatsPlus2[] = _("++ All Stats");
-static const u8 sText_CritHitsPlus[] = _("+ Critical Hit Chance");
-static const u8 sText_FollowMe[] = _("Follow Me");
-static const u8 sText_RecoverHP[] = _("Recover HP");
-static const u8 sText_HealAllyHP[] = _("Heal Replacement HP");
-static const u8 sText_PowerColon[] = _("Power: ");
+static const u8 sText_ResetStats[] = _("重置降低的能力");
+static const u8 sText_StatsPlus[] = _("增加所有能力");
+static const u8 sText_StatsPlus2[] = _("大幅增加所有能力");
+static const u8 sText_CritHitsPlus[] = _("增肌命中要害的几率");
+static const u8 sText_FollowMe[] = _("跟着我");
+static const u8 sText_RecoverHP[] = _("回复HP");
+static const u8 sText_HealAllyHP[] = _("治疗替身的HP");
+static const u8 sText_PowerColon[] = _("威力: ");
 
 static const u32 sZMoveTriggerGfx[] = INCBIN_U32("graphics/battle_interface/z_move_trigger.4bpp.lz");
 static const u16 sZMoveTriggerPal[] = INCBIN_U16("graphics/battle_interface/z_move_trigger.gbapal");
