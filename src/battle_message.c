@@ -5,6 +5,7 @@
 #include "battle_message.h"
 #include "battle_setup.h"
 #include "battle_tower.h"
+#include "battle_z_move.h"
 #include "data.h"
 #include "event_data.h"
 #include "frontier_util.h"
@@ -49,7 +50,6 @@ extern const u16 gUnknown_08D85620[];
 // this file's functions
 static void ChooseMoveUsedParticle(u8 *textPtr);
 static void ChooseTypeOfMoveUsedString(u8 *dst);
-static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst);
 
 // EWRAM vars
 static EWRAM_DATA u16 sBattlerAbilities[MAX_BATTLERS_COUNT] = {0};
@@ -704,9 +704,26 @@ static const u8 sText_EjectButtonActivate[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}
 static const u8 sText_AttackerGotOverInfatuation[] =_("{B_ATK_NAME_WITH_PREFIX}克服了迷人!");
 static const u8 sText_TormentedNoMore[] = _("{B_ATK_NAME_WITH_PREFIX}不再\n受到折磨!");
 static const u8 sText_HealBlockedNoMore[] = _("{B_ATK_NAME_WITH_PREFIX}解除了\n它的回复封锁!");
+static const u8 sText_ZPowerSurrounds[] = _("{B_ATK_NAME_WITH_PREFIX} surrounds\nitself with its Z-Power!");
+static const u8 sText_ZPowerUnleashed[] = _("{B_ATK_NAME_WITH_PREFIX} unleashes\nits full-force Z-Move!");
+static const u8 sText_ZMoveResetsStats[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} returned its\ndecreased stats to normal using\lits Z-Power!");
+static const u8 sText_ZMoveAllStatsUp[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} boosted all\nof its stats using its Z-Power!");
+static const u8 sText_ZMoveBoostCrit[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} boosted its\ncritical-hit ratio using its Z-Power!");
+static const u8 sText_ZMoveRestoreHp[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} restored its\nHP using its Z-Power!");
+static const u8 sText_ZMoveStatUp[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} boosted\nits stats using its Z-Power!");
+static const u8 sText_ZMoveHpSwitchInTrap[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s HP was restored by the Z-Power!");
+static const u8 sText_TerrainReturnedToNormal[] = _("The terrain returned to\nnormal!");
 
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
+    [STRINGID_ZPOWERSURROUNDS - 12] = sText_ZPowerSurrounds,
+    [STRINGID_ZMOVEUNLEASHED - 12] = sText_ZPowerUnleashed,
+    [STRINGID_ZMOVERESETSSTATS - 12] = sText_ZMoveResetsStats,
+    [STRINGID_ZMOVEALLSTATSUP - 12] = sText_ZMoveAllStatsUp,
+    [STRINGID_ZMOVEZBOOSTCRIT - 12] = sText_ZMoveBoostCrit,
+    [STRINGID_ZMOVERESTOREHP - 12] = sText_ZMoveRestoreHp,
+    [STRINGID_ZMOVESTATUP - 12] = sText_ZMoveStatUp,
+    [STRINGID_ZMOVEHPTRAP - 12] = sText_ZMoveHpSwitchInTrap,
     [STRINGID_HEALBLOCKEDNOMORE - 12] = sText_HealBlockedNoMore,
     [STRINGID_TORMENTEDNOMORE - 12] = sText_TormentedNoMore,
     [STRINGID_ATKGOTOVERINFATUATION - 12] = sText_AttackerGotOverInfatuation,
@@ -1272,6 +1289,18 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_AURABREAKENTERS - 12] = sText_AuraBreakActivates,
     [STRINGID_COMATOSEENTERS - 12] = sText_ComatoseActivates,
     [STRINGID_SCREENCLEANERENTERS - 12] = sText_ScreenCleanerActivates,
+    [STRINGID_TERRAINREMOVED - 12] = sText_TerrainReturnedToNormal,
+};
+
+const u16 gZEffectStringIds[] = 
+{
+    [MULTISTRING_Z_RESET_STATS] = STRINGID_ZMOVERESETSSTATS,
+    [MULTISTRING_Z_ALL_STATS_UP]= STRINGID_ZMOVEALLSTATSUP,
+    [MULTISTRING_Z_BOOST_CRITS] = STRINGID_ZMOVEZBOOSTCRIT,
+    [MULTISTRING_Z_FOLLOW_ME]   = STRINGID_PKMNCENTERATTENTION,
+    [MULTISTRING_Z_RECOVER_HP]  = STRINGID_ZMOVERESTOREHP,
+    [MULTISTRING_Z_STAT_UP]     = STRINGID_ZMOVESTATUP,
+    [MULTISTRING_Z_HP_TRAP]     = STRINGID_ZMOVEHPTRAP,
 };
 
 const u16 gMentalHerbCureStringIds[] = 
@@ -1286,7 +1315,7 @@ const u16 gMentalHerbCureStringIds[] =
 
 const u16 gTerrainStringIds[] =
 {
-    STRINGID_TERRAINBECOMESMISTY, STRINGID_TERRAINBECOMESGRASSY, STRINGID_TERRAINBECOMESELECTRIC, STRINGID_TERRAINBECOMESPSYCHIC
+    STRINGID_TERRAINBECOMESMISTY, STRINGID_TERRAINBECOMESGRASSY, STRINGID_TERRAINBECOMESELECTRIC, STRINGID_TERRAINBECOMESPSYCHIC, STRINGID_TERRAINREMOVED,
 };
 
 const u16 gTerrainEndingStringIds[] = 
@@ -2715,7 +2744,9 @@ void BufferStringBattle(u16 stringID)
         }
         break;
     case STRINGID_USEDMOVE: // pokemon used a move msg
-        if (gBattleMsgDataPtr->currentMove >= MOVES_COUNT)
+        if (gBattleStruct->zmove.active && gBattleStruct->zmove.activeSplit != SPLIT_STATUS)
+            StringCopy(gBattleTextBuff3, GetZMoveName(gBattleMsgDataPtr->currentMove));
+        else if (gBattleMsgDataPtr->currentMove >= MOVES_COUNT)
             StringCopy(gBattleTextBuff3, sATypeMove_Table[*(&gBattleStruct->stringMoveType)]);
         else
             StringCopy(gBattleTextBuff3, gMoveNames[gBattleMsgDataPtr->currentMove]);
@@ -3143,13 +3174,17 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 HANDLE_NICKNAME_STRING_CASE(gBattleScripting.battler)
                 break;
             case B_TXT_CURRENT_MOVE: // current move name
-                if (gBattleMsgDataPtr->currentMove >= MOVES_COUNT)
+                if (gBattleStruct->zmove.active)
+                    toCpy = GetZMoveName(gBattleMsgDataPtr->currentMove);
+                else if (gBattleMsgDataPtr->currentMove >= MOVES_COUNT)
                     toCpy = sATypeMove_Table[gBattleStruct->stringMoveType];
                 else
                     toCpy = gMoveNames[gBattleMsgDataPtr->currentMove];
                 break;
             case B_TXT_LAST_MOVE: // originally used move name
-                if (gBattleMsgDataPtr->originallyUsedMove >= MOVES_COUNT)
+                if (gBattleStruct->zmove.active)
+                    toCpy = GetZMoveName(gBattleMsgDataPtr->originallyUsedMove);
+                else if (gBattleMsgDataPtr->originallyUsedMove >= MOVES_COUNT)
                     toCpy = sATypeMove_Table[gBattleStruct->stringMoveType];
                 else
                     toCpy = gMoveNames[gBattleMsgDataPtr->originallyUsedMove];
@@ -3479,7 +3514,7 @@ static void IllusionNickHack(u32 battlerId, u32 partyId, u8 *dst)
     GetMonData(mon, MON_DATA_NICKNAME, dst);
 }
 
-static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst)
+void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst)
 {
     u32 srcID = 1;
     u32 value = 0;

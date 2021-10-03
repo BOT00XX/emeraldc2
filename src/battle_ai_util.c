@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_z_move.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -709,10 +710,16 @@ static bool32 AI_GetIfCrit(u32 move, u8 battlerAtk, u8 battlerDef)
     return isCrit;
 }
 
-s32 AI_CalcDamage(u16 move, u8 battlerAtk, u8 battlerDef)
+s32 AI_CalcDamage(u16 move, u8 battlerAtk, u8 battlerDef, bool32 considerZPower)
 {
     s32 dmg, moveType, critDmg, normalDmg;
     s8 critChance;
+    
+    if (considerZPower && IsViableZMove(battlerAtk, move))
+    {
+        gBattleStruct->zmove.baseMoves[battlerAtk] = move;
+        gBattleStruct->zmove.active = TRUE; //temporarily enable z moves for damage calcs
+    }
 
     SaveBattlerData(battlerAtk);
     SaveBattlerData(battlerDef);
@@ -758,6 +765,8 @@ s32 AI_CalcDamage(u16 move, u8 battlerAtk, u8 battlerDef)
     RestoreBattlerData(battlerAtk);
     RestoreBattlerData(battlerDef);
 
+    gBattleStruct->zmove.active = FALSE;
+    gBattleStruct->zmove.baseMoves[battlerAtk] = MOVE_NONE;
     return dmg;
 }
 
@@ -1022,7 +1031,7 @@ bool32 CanTargetFaintAi(u8 battlerDef, u8 battlerAtk)
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         if (moves[i] != MOVE_NONE && moves[i] != 0xFFFF && !(unusable & gBitTable[i])
-            && AI_CalcDamage(moves[i], battlerDef, battlerAtk) >= gBattleMons[battlerAtk].hp)
+            && AI_CalcDamage(moves[i], battlerDef, battlerAtk, FALSE) >= gBattleMons[battlerAtk].hp)
         {
             return TRUE;
         }
@@ -1036,7 +1045,7 @@ bool32 CanMoveFaintBattler(u16 move, u8 battlerDef, u8 battlerAtk, u8 nHits)
     s32 i, dmg;
     u32 unusable = CheckMoveLimitations(battlerDef, 0, 0xFF & ~MOVE_LIMITATION_PP);
 
-    if (move != MOVE_NONE && move != 0xFFFF && !(unusable & gBitTable[i]) && AI_CalcDamage(move, battlerDef, battlerAtk) >= gBattleMons[battlerAtk].hp)
+    if (move != MOVE_NONE && move != 0xFFFF && !(unusable & gBitTable[i]) && AI_CalcDamage(move, battlerDef, battlerAtk, FALSE) >= gBattleMons[battlerAtk].hp)
         return TRUE;
 
     return FALSE;
@@ -1051,7 +1060,7 @@ bool32 CanTargetFaintAiWithMod(u8 battlerDef, u8 battlerAtk, s32 hpMod, s32 dmgM
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        u32 dmg = AI_CalcDamage(moves[i], battlerDef, battlerAtk);
+        u32 dmg = AI_CalcDamage(moves[i], battlerDef, battlerAtk, FALSE);
         u32 hpCheck = gBattleMons[battlerAtk].hp + hpMod;
         if (dmgMod)
             dmg *= dmgMod;
@@ -3166,7 +3175,7 @@ s32 AI_CalcPartyMonDamage(u16 move, u8 battlerAtk, u8 battlerDef, struct Pokemon
         battleMons[i] = gBattleMons[i];
 
     PokemonToBattleMon(mon, &gBattleMons[battlerAtk]);
-    dmg = AI_CalcDamage(move, battlerAtk, battlerDef);
+    dmg = AI_CalcDamage(move, battlerAtk, battlerDef, FALSE);
 
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         gBattleMons[i] = battleMons[i];

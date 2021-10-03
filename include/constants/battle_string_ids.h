@@ -578,8 +578,35 @@
 #define STRINGID_ATKGOTOVERINFATUATION           574
 #define STRINGID_TORMENTEDNOMORE                 575
 #define STRINGID_HEALBLOCKEDNOMORE               576
+#define STRINGID_ZPOWERSURROUNDS                 577
+#define STRINGID_ZMOVEUNLEASHED                  578
+#define STRINGID_ZMOVERESETSSTATS                579
+#define STRINGID_ZMOVEALLSTATSUP                 580
+#define STRINGID_ZMOVEZBOOSTCRIT                 581
+#define STRINGID_ZMOVERESTOREHP                  582
+#define STRINGID_ZMOVESTATUP                     583
+#define STRINGID_ZMOVEHPTRAP                     584
+#define STRINGID_TERRAINREMOVED                  585
 
-#define BATTLESTRINGS_COUNT                      577
+#define BATTLESTRINGS_COUNT                      586
+
+//// multichoice message IDs
+// switch in ability message
+#define MULTI_SWITCHIN_MOLDBREAKER      0
+#define MULTI_SWITCHIN_TERAVOLT         1
+#define MULTI_SWITCHIN_TURBOBLAZE       2
+#define MULTI_SWITCHIN_SLOWSTART        3
+#define MULTI_SWITCHIN_UNNERVE          4
+#define MULTI_SWITCHIN_ANTICIPATION     5
+#define MULTI_SWITCHIN_FOREWARN         6
+#define MULTI_SWITCHIN_PRESSURE         7
+#define MULTI_SWITCHIN_DARKAURA         8
+#define MULTI_SWITCHIN_FAIRYAURA        9
+#define MULTI_SWITCHIN_AURABREAK        10
+#define MULTI_SWITCHIN_COMATOSE         11
+#define MULTI_SWITCHIN_SCREENCLEANER    12
+#define MULTI_SWITCHIN_ASONE            13
+#define MULTI_SWITCHIN_CURIOUS_MEDICINE 14
 
 // The below IDs are all indexes into battle message tables,
 // used to determine which of a set of messages to print.
@@ -824,8 +851,18 @@
 #define B_MSG_MENTALHERBCURE_DISABLE           5
 
 // gTerrainPreventsStringIds
+
 #define B_MSG_TERRAINPREVENTS_MISTY     0
 #define B_MSG_TERRAINPREVENTS_ELECTRIC  1
 #define B_MSG_TERRAINPREVENTS_PSYCHIC   2
+// z effects
+
+#define MULTISTRING_Z_RESET_STATS   0
+#define MULTISTRING_Z_ALL_STATS_UP  1
+#define MULTISTRING_Z_BOOST_CRITS   2
+#define MULTISTRING_Z_FOLLOW_ME     3
+#define MULTISTRING_Z_RECOVER_HP    4
+#define MULTISTRING_Z_STAT_UP       5
+#define MULTISTRING_Z_HP_TRAP       6
 
 #endif // GUARD_CONSTANTS_BATTLE_STRING_IDS_H
