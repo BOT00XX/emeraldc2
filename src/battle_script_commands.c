@@ -1334,6 +1334,28 @@ static void Cmd_attackcanceler(void)
 {
     s32 i, moveType;
 
+    GET_MOVE_TYPE(gCurrentMove, moveType);
+
+    if (moveType == TYPE_FIRE
+     && (gBattleWeather & WEATHER_RAIN_PRIMAL)
+     && WEATHER_HAS_EFFECT
+     && gBattleMoves[gCurrentMove].power)
+    {
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_PrimordialSeaFizzlesOutFireTypeMoves;
+        return;
+    }
+
+    if (moveType == TYPE_WATER
+     && (gBattleWeather & WEATHER_SUN_PRIMAL)
+     && WEATHER_HAS_EFFECT
+     && gBattleMoves[gCurrentMove].power)
+    {
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_DesolateLandEvaporatesWaterTypeMoves;
+        return;
+    }
+
     if (gBattleOutcome != 0)
     {
         gCurrentActionFuncId = B_ACTION_FINISHED;
@@ -1353,7 +1375,6 @@ static void Cmd_attackcanceler(void)
         return;
 
     // Check Protean activation.
-    GET_MOVE_TYPE(gCurrentMove, moveType);
     if ((GetBattlerAbility(gBattlerAttacker) == ABILITY_PROTEAN || GetBattlerAbility(gBattlerAttacker) == ABILITY_LIBERO)
         && (gBattleMons[gBattlerAttacker].type1 != moveType || gBattleMons[gBattlerAttacker].type2 != moveType ||
             (gBattleMons[gBattlerAttacker].type3 != moveType && gBattleMons[gBattlerAttacker].type3 != TYPE_MYSTERY))
@@ -1416,7 +1437,7 @@ static void Cmd_attackcanceler(void)
         gProtectStructs[gBattlerTarget].bounceMove = 0;
         gProtectStructs[gBattlerTarget].usesBouncedMove = 1;
         gBattleCommunication[MULTISTRING_CHOOSER] = 0;
-        if (BlocksPrankster(gCurrentMove, gBattlerTarget, gBattlerAttacker))
+        if (BlocksPrankster(gCurrentMove, gBattlerTarget, gBattlerAttacker, TRUE))
         {
             // Opponent used a prankster'd magic coat -> reflected status move should fail against a dark-type attacker
             gBattlerTarget = gBattlerAttacker;
@@ -1893,6 +1914,9 @@ static void Cmd_typecalc(void)
 static void Cmd_adjustdamage(void)
 {
     u8 holdEffect, param;
+    u32 moveType;
+
+    GET_MOVE_TYPE(gCurrentMove, moveType);
 
     if (DoesSubstituteBlockMove(gBattlerAttacker, gBattlerTarget, gCurrentMove))
         goto END;
@@ -1969,6 +1993,23 @@ END:
         BattleScriptPushCursor();
         gBattlescriptCurrInstr = BattleScript_GemActivates;
         gLastUsedItem = gBattleMons[gBattlerAttacker].item;
+    }
+
+    // WEATHER_STRONG_WINDS prints a string when it's about to reduce the power
+    // of a move that is Super Effective against a Flying-type Pokémon.
+    if (gBattleWeather & WEATHER_STRONG_WINDS)
+    {
+        if ((gBattleMons[gBattlerTarget].type1 == TYPE_FLYING
+         && GetTypeModifier(moveType, gBattleMons[gBattlerTarget].type1) >= UQ_4_12(2.0))
+         || (gBattleMons[gBattlerTarget].type2 == TYPE_FLYING
+         && GetTypeModifier(moveType, gBattleMons[gBattlerTarget].type2) >= UQ_4_12(2.0))
+         || (gBattleMons[gBattlerTarget].type3 == TYPE_FLYING
+         && GetTypeModifier(moveType, gBattleMons[gBattlerTarget].type3) >= UQ_4_12(2.0)))
+        {
+            gBattlerAbility = gBattlerTarget;
+            BattleScriptPushCursor();
+            gBattlescriptCurrInstr = BattleScript_AttackWeakenedByStrongWinds;
+        }
     }
 }
 
@@ -3067,7 +3108,7 @@ void SetMoveEffect(bool32 primary, u32 certain)
                         gBattlescriptCurrInstr++;
                     }
                     else if (gBattleMons[gBattlerTarget].item
-                        && gBattleMons[gBattlerTarget].ability == ABILITY_STICKY_HOLD)
+                        && GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
                     {
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_NoItemSteal;
@@ -3176,6 +3217,14 @@ void SetMoveEffect(bool32 primary, u32 certain)
 
                 BattleScriptPush(gBattlescriptCurrInstr + 1);
                 gBattlescriptCurrInstr = BattleScript_MoveEffectRecoilWithStatus;
+                break;
+            case MOVE_EFFECT_RECOIL_HP_25: // Struggle
+                gBattleMoveDamage = (gBattleMons[gEffectBattler].maxHP) / 4;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+
+                BattleScriptPush(gBattlescriptCurrInstr + 1);
+                gBattlescriptCurrInstr = BattleScript_MoveEffectRecoil;
                 break;
             case MOVE_EFFECT_THRASH:
                 if (gBattleMons[gEffectBattler].status2 & STATUS2_LOCK_CONFUSE)
@@ -4478,12 +4527,13 @@ static void Cmd_endselectionscript(void)
 static void Cmd_playanimation(void)
 {
     const u16* argumentPtr;
+    u8 animId = gBattlescriptCurrInstr[2];
 
     gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
     argumentPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
 
     #if B_TERRAIN_BG_CHANGE == FALSE
-    if (gBattlescriptCurrInstr[2] == B_ANIM_RESTORE_BG)
+    if (animId == B_ANIM_RESTORE_BG)
     {
         // workaround for .if not working
         gBattlescriptCurrInstr += 7;
@@ -4491,28 +4541,28 @@ static void Cmd_playanimation(void)
     }
     #endif
 
-    if (gBattlescriptCurrInstr[2] == B_ANIM_STATS_CHANGE
-        || gBattlescriptCurrInstr[2] == B_ANIM_SNATCH_MOVE
-        || gBattlescriptCurrInstr[2] == B_ANIM_MEGA_EVOLUTION
-        || gBattlescriptCurrInstr[2] == B_ANIM_ILLUSION_OFF
-        || gBattlescriptCurrInstr[2] == B_ANIM_FORM_CHANGE
-        || gBattlescriptCurrInstr[2] == B_ANIM_SUBSTITUTE_FADE)
+    if (animId == B_ANIM_STATS_CHANGE
+        || animId == B_ANIM_SNATCH_MOVE
+        || animId == B_ANIM_MEGA_EVOLUTION
+        || animId == B_ANIM_ILLUSION_OFF
+        || animId == B_ANIM_FORM_CHANGE
+        || animId == B_ANIM_SUBSTITUTE_FADE)
     {
-        BtlController_EmitBattleAnimation(0, gBattlescriptCurrInstr[2], *argumentPtr);
+        BtlController_EmitBattleAnimation(0, animId, *argumentPtr);
         MarkBattlerForControllerExec(gActiveBattler);
         gBattlescriptCurrInstr += 7;
     }
-    else if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+    else if (gHitMarker & HITMARKER_NO_ANIMATIONS && animId != B_ANIM_RESTORE_BG)
     {
         BattleScriptPush(gBattlescriptCurrInstr + 7);
         gBattlescriptCurrInstr = BattleScript_Pausex20;
     }
-    else if (gBattlescriptCurrInstr[2] == B_ANIM_RAIN_CONTINUES
-             || gBattlescriptCurrInstr[2] == B_ANIM_SUN_CONTINUES
-             || gBattlescriptCurrInstr[2] == B_ANIM_SANDSTORM_CONTINUES
-             || gBattlescriptCurrInstr[2] == B_ANIM_HAIL_CONTINUES)
+    else if (animId == B_ANIM_RAIN_CONTINUES
+             || animId == B_ANIM_SUN_CONTINUES
+             || animId == B_ANIM_SANDSTORM_CONTINUES
+             || animId == B_ANIM_HAIL_CONTINUES)
     {
-        BtlController_EmitBattleAnimation(0, gBattlescriptCurrInstr[2], *argumentPtr);
+        BtlController_EmitBattleAnimation(0, animId, *argumentPtr);
         MarkBattlerForControllerExec(gActiveBattler);
         gBattlescriptCurrInstr += 7;
     }
@@ -4522,7 +4572,7 @@ static void Cmd_playanimation(void)
     }
     else
     {
-        BtlController_EmitBattleAnimation(0, gBattlescriptCurrInstr[2], *argumentPtr);
+        BtlController_EmitBattleAnimation(0, animId, *argumentPtr);
         MarkBattlerForControllerExec(gActiveBattler);
         gBattlescriptCurrInstr += 7;
     }
@@ -5131,7 +5181,7 @@ static void Cmd_moveend(void)
                     // Attacker is the damage-dealer, battler is mon to be switched out
                     if (IsBattlerAlive(battler)
                       && GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_EJECT_BUTTON
-                      && !DoesSubstituteBlockMove(gCurrentMove, gBattlerAttacker, battler)
+                      && !DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove)
                       && (gSpecialStatuses[battler].physicalDmg != 0 || gSpecialStatuses[battler].specialDmg != 0)
                       && CountUsablePartyMons(battler) > 0)  // Has mon to switch into
                     {
@@ -5165,7 +5215,7 @@ static void Cmd_moveend(void)
                     // Attacker is the one to be switched out, battler is one with red card
                     if (battler != gBattlerAttacker
                       && IsBattlerAlive(battler)
-                      && !DoesSubstituteBlockMove(gCurrentMove, gBattlerAttacker, battler)
+                      && !DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove)
                       && GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_RED_CARD
                       && (gSpecialStatuses[battler].physicalDmg != 0 || gSpecialStatuses[battler].specialDmg != 0)
                       && CanBattlerSwitch(gBattlerAttacker))
@@ -5232,7 +5282,7 @@ static void Cmd_moveend(void)
                     if (battler != gBattlerAttacker                                                     // Cannot pickpocket yourself
                       && GetBattlerAbility(battler) == ABILITY_PICKPOCKET                               // Target must have pickpocket ability
                       && BATTLER_DAMAGED(battler)                                                       // Target needs to have been damaged
-                      && !DoesSubstituteBlockMove(gCurrentMove, gBattlerAttacker, battler)              // Subsitute unaffected
+                      && !DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove)              // Subsitute unaffected
                       && IsBattlerAlive(battler)                                                        // Battler must be alive to pickpocket
                       && gBattleMons[battler].item == ITEM_NONE                                         // Pickpocketer can't have an item already
                       && CanStealItem(battler, gBattlerAttacker, gBattleMons[gBattlerAttacker].item))   // Cannot steal plates, mega stones, etc
@@ -7327,6 +7377,21 @@ static u32 GetHighestStatId(u32 battlerId)
     return highestId;
 }
 
+static bool32 IsRototillerAffected(u32 battlerId)
+{
+    if (!IsBattlerAlive(battlerId))
+        return FALSE;
+    if (!IsBattlerGrounded(battlerId))
+        return FALSE;   // Only grounded battlers affected
+    if (!IS_BATTLER_OF_TYPE(battlerId, TYPE_GRASS))
+        return FALSE;   // Only grass types affected
+    if (gStatuses3[battlerId] & STATUS3_SEMI_INVULNERABLE)
+        return FALSE;   // Rototiller doesn't affected semi-invulnerable battlers
+    if (BlocksPrankster(MOVE_ROTOTILLER, gBattlerAttacker, battlerId, FALSE))
+        return FALSE;
+    return TRUE;
+}
+
 static void Cmd_various(void)
 {
     struct Pokemon *mon;
@@ -7910,15 +7975,15 @@ static void Cmd_various(void)
             gBattlescriptCurrInstr += 7;
         return;
     case VARIOUS_SET_SIMPLE_BEAM:
-        if (IsEntrainmentTargetOrSimpleBeamBannedAbility(gBattleMons[gActiveBattler].ability))
+        if (IsEntrainmentTargetOrSimpleBeamBannedAbility(gBattleMons[gBattlerTarget].ability)
+            || gBattleMons[gBattlerTarget].ability == ABILITY_SIMPLE)
         {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
         }
         else
         {
-            gBattleMons[gActiveBattler].ability = ABILITY_SIMPLE;
+            gBattleMons[gBattlerTarget].ability = ABILITY_SIMPLE;
             gBattlescriptCurrInstr += 7;
-            break;
         }
         return;
     case VARIOUS_TRY_ENTRAINMENT:
@@ -8734,11 +8799,75 @@ static void Cmd_various(void)
         }
         gFieldStatuses &= ~STATUS_FIELD_TERRAIN_ANY;    // remove the terrain
         break;
-    case  VARIOUS_JUMP_IF_PRANKSTER_BLOCKED:
-        if (BlocksPrankster(gCurrentMove, gBattlerAttacker, gActiveBattler))
+    case VARIOUS_JUMP_IF_PRANKSTER_BLOCKED:
+        if (BlocksPrankster(gCurrentMove, gBattlerAttacker, gActiveBattler, TRUE))
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
         else
             gBattlescriptCurrInstr += 7;
+        return;
+    case VARIOUS_TRY_TO_CLEAR_PRIMAL_WEATHER:
+    {
+        bool8 shouldNotClear = FALSE;
+
+        for (i = 0; i < gBattlersCount; i++)
+        {
+            if (((GetBattlerAbility(i) == ABILITY_DESOLATE_LAND && gBattleWeather & WEATHER_SUN_PRIMAL)
+             || (GetBattlerAbility(i) == ABILITY_PRIMORDIAL_SEA && gBattleWeather & WEATHER_RAIN_PRIMAL)
+             || (GetBattlerAbility(i) == ABILITY_DELTA_STREAM && gBattleWeather & WEATHER_STRONG_WINDS))
+             && IsBattlerAlive(i)
+             && !(gStatuses3[i] & STATUS3_GASTRO_ACID))
+                shouldNotClear = TRUE;
+        }
+        if (gBattleWeather & WEATHER_SUN_PRIMAL && !shouldNotClear)
+        {
+            gBattleWeather &= ~WEATHER_SUN_PRIMAL;
+            PrepareStringBattle(STRINGID_EXTREMESUNLIGHTFADED, gActiveBattler);
+            gBattleCommunication[MSG_DISPLAY] = 1;
+        }
+        else if (gBattleWeather & WEATHER_RAIN_PRIMAL && !shouldNotClear)
+        {
+            gBattleWeather &= ~WEATHER_RAIN_PRIMAL;
+            PrepareStringBattle(STRINGID_HEAVYRAINLIFTED, gActiveBattler);
+            gBattleCommunication[MSG_DISPLAY] = 1;
+        }
+        else if (gBattleWeather & WEATHER_STRONG_WINDS && !shouldNotClear)
+        {
+            gBattleWeather &= ~WEATHER_STRONG_WINDS;
+            PrepareStringBattle(STRINGID_STRONGWINDSDISSIPATED, gActiveBattler);
+            gBattleCommunication[MSG_DISPLAY] = 1;
+        }
+        break;
+    }
+    case VARIOUS_GET_ROTOTILLER_TARGETS:
+        // Gets the battlers to be affected by rototiller. If there are none, print 'But it failed!'
+        {
+            u32 count = 0;
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                gSpecialStatuses[i].rototillerAffected = FALSE;
+                if (IsRototillerAffected(i))
+                {
+                    gSpecialStatuses[i].rototillerAffected = TRUE;
+                    count++;
+                }
+            }
+            
+            if (count == 0)
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);   // Rototiller fails
+            else
+                gBattlescriptCurrInstr += 7;
+        }
+        return;
+    case VARIOUS_JUMP_IF_NOT_ROTOTILLER_AFFECTED:
+        if (gSpecialStatuses[gActiveBattler].rototillerAffected)
+        {
+            gSpecialStatuses[gActiveBattler].rototillerAffected = FALSE;
+            gBattlescriptCurrInstr += 7;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);   // Unaffected by rototiller - print STRINGID_NOEFFECTONTARGET
+        }
         return;
     }
 
@@ -9122,7 +9251,7 @@ bool8 UproarWakeUpCheck(u8 battlerId)
 
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || gBattleMons[battlerId].ability == ABILITY_SOUNDPROOF)
+        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || GetBattlerAbility(battlerId) == ABILITY_SOUNDPROOF)
             continue;
 
         gBattleScripting.battler = i;
@@ -10047,7 +10176,7 @@ static void Cmd_weatherdamage(void)
                 && ability != ABILITY_SAND_RUSH
                 && ability != ABILITY_OVERCOAT
                 && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
-                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOOGLES)
+                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
             {
                 gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
                 if (gBattleMoveDamage == 0)
@@ -10072,7 +10201,7 @@ static void Cmd_weatherdamage(void)
                 && ability != ABILITY_OVERCOAT
                 && ability != ABILITY_ICE_BODY
                 && !(gStatuses3[gBattlerAttacker] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER))
-                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOOGLES)
+                && GetBattlerHoldEffect(gBattlerAttacker, TRUE) != HOLD_EFFECT_SAFETY_GOGGLES)
             {
                 gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
                 if (gBattleMoveDamage == 0)
@@ -10771,7 +10900,7 @@ static void Cmd_healpartystatus(void)
         else
             party = gEnemyParty;
 
-        if (gBattleMons[gBattlerAttacker].ability != ABILITY_SOUNDPROOF)
+        if (GetBattlerAbility(gBattlerAttacker) != ABILITY_SOUNDPROOF)
         {
             gBattleMons[gBattlerAttacker].status1 = 0;
             gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_NIGHTMARE);
@@ -10787,7 +10916,7 @@ static void Cmd_healpartystatus(void)
         if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
             && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
         {
-            if (gBattleMons[gActiveBattler].ability != ABILITY_SOUNDPROOF)
+            if (GetBattlerAbility(gActiveBattler) != ABILITY_SOUNDPROOF)
             {
                 gBattleMons[gActiveBattler].status1 = 0;
                 gBattleMons[gActiveBattler].status2 &= ~(STATUS2_NIGHTMARE);
@@ -10900,8 +11029,8 @@ static void Cmd_trysetperishsong(void)
     for (i = 0; i < gBattlersCount; i++)
     {
         if (gStatuses3[i] & STATUS3_PERISH_SONG
-            || gBattleMons[i].ability == ABILITY_SOUNDPROOF
-            || BlocksPrankster(gCurrentMove, gBattlerAttacker, i))
+            || GetBattlerAbility(i) == ABILITY_SOUNDPROOF
+            || BlocksPrankster(gCurrentMove, gBattlerAttacker, i, TRUE))
         {
             notAffectedCount++;
         }
@@ -11616,7 +11745,7 @@ static void Cmd_tryswapitems(void) // trick
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         }
         // check if ability prevents swapping
-        else if (gBattleMons[gBattlerTarget].ability == ABILITY_STICKY_HOLD)
+        else if (GetBattlerAbility(gBattlerTarget) == ABILITY_STICKY_HOLD)
         {
             gBattlescriptCurrInstr = BattleScript_StickyHoldActivates;
             gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
@@ -12430,7 +12559,8 @@ static void Cmd_handleballthrow(void)
     {
         u32 odds;
         u8 catchRate;
-
+    
+        gLastThrownBall = gLastUsedItem;
         if (gLastUsedItem == ITEM_SAFARI_BALL)
             catchRate = gBattleStruct->safariCatchFactor * 1275 / 100;
         else
