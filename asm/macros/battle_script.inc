@@ -1823,6 +1823,7 @@
 	
 	.macro setzeffect
 	various BS_ATTACKER, VARIOUS_SET_Z_EFFECT
+	.endm
 
 	.macro trytoclearprimalweather
 	various BS_ATTACKER, VARIOUS_TRY_TO_CLEAR_PRIMAL_WEATHER

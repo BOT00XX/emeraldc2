@@ -425,6 +425,7 @@ const u8 gText_PkmnAdoresBaseVar2Fell[] = _("{STR_VAR_1}非常喜欢你了！\n�
 const u8 gText_PkmnFriendlyBaseVar2CantFall[] = _("{STR_VAR_1}变得更加友好了\n但是基础{STR_VAR_2}不能再下降了！{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnSnappedOutOfConfusion[] = _("{STR_VAR_1}解除了\n混乱状态！{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnGotOverInfatuation[] = _("{STR_VAR_1}解除了\n着迷状态！{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnTransformed[] = _("{STR_VAR_1}变成了!{PAUSE_UNTIL_PRESS}");
 const u8 gText_ThrowAwayItem[] = _("丢弃这个\n{STR_VAR_1}吗？");
 const u8 gText_ItemThrownAway[] = _("{STR_VAR_1}\n被丢掉了。{PAUSE_UNTIL_PRESS}");
 const u8 gText_TeachWhichPokemon2[] = _("让哪个宝可梦学会？"); // Unused
