@@ -187,6 +187,7 @@
 #define VARIOUS_SET_Z_EFFECT                    115
 #define VARIOUS_TRY_TO_CLEAR_PRIMAL_WEATHER     116
 #define VARIOUS_GET_ROTOTILLER_TARGETS          117
+#define VARIOUS_JUMP_IF_NOT_ROTOTILLER_AFFECTED 118
 
 // Cmd_manipulatedamage
 #define DMG_CHANGE_SIGN            0
