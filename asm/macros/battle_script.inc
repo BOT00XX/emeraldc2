@@ -1823,6 +1823,19 @@
 	
 	.macro setzeffect
 	various BS_ATTACKER, VARIOUS_SET_Z_EFFECT
+
+	.macro trytoclearprimalweather
+	various BS_ATTACKER, VARIOUS_TRY_TO_CLEAR_PRIMAL_WEATHER
+	.endm
+
+	.macro getrototillertargets ptr:req
+	various BS_ATTACKER, VARIOUS_GET_ROTOTILLER_TARGETS
+	.4byte \ptr
+	.endm
+	
+	.macro jumpifnotrototilleraffected battler:req, ptr:req
+	various \battler, VARIOUS_JUMP_IF_NOT_ROTOTILLER_AFFECTED
+	.4byte \ptr
 	.endm
 
 @ helpful macros
@@ -1926,6 +1939,12 @@
 	.macro jumpifflowerveil jumpptr:req
 	jumpifnottype BS_TARGET, TYPE_GRASS, 1f
 	jumpifability BS_TARGET_SIDE, ABILITY_FLOWER_VEIL, \jumpptr
+	1:
+	.endm
+
+	.macro jumpifflowerveilattacker jumpptr:req
+	jumpifnottype BS_ATTACKER, TYPE_GRASS, 1f
+	jumpifability BS_ATTACKER_SIDE, ABILITY_FLOWER_VEIL, \jumpptr
 	1:
 	.endm
 

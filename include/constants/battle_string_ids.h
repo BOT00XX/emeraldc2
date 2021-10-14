@@ -10,7 +10,6 @@
 #define STRINGID_USEDMOVE       4
 #define STRINGID_BATTLEEND      5
 #define STRINGID_TRAINERSLIDE   6
-
 // todo: make some of those names less vague: attacker/target vs pkmn, etc.
 #define STRINGID_TRAINER1LOSETEXT                12
 #define STRINGID_PKMNGAINEDEXP                   13
@@ -587,8 +586,22 @@
 #define STRINGID_ZMOVESTATUP                     583
 #define STRINGID_ZMOVEHPTRAP                     584
 #define STRINGID_TERRAINREMOVED                  585
+#define STRINGID_ATTACKERBECAMEFULLYCHARGED           586
+#define STRINGID_ATTACKERBECAMEASHSPECIES             587
+#define STRINGID_EXTREMELYHARSHSUNLIGHT               588
+#define STRINGID_EXTREMESUNLIGHTFADED                 589
+#define STRINGID_MOVEEVAPORATEDINTHEHARSHSUNLIGHT     590
+#define STRINGID_EXTREMELYHARSHSUNLIGHTWASNOTLESSENED 591
+#define STRINGID_HEAVYRAIN                            592
+#define STRINGID_HEAVYRAINLIFTED                      593
+#define STRINGID_MOVEFIZZLEDOUTINTHEHEAVYRAIN         594
+#define STRINGID_NORELIEFROMHEAVYRAIN                 595
+#define STRINGID_MYSTERIOUSAIRCURRENT                 596
+#define STRINGID_STRONGWINDSDISSIPATED                597
+#define STRINGID_MYSTERIOUSAIRCURRENTBLOWSON          598
+#define STRINGID_ATTACKWEAKENEDBSTRONGWINDS           599
 
-#define BATTLESTRINGS_COUNT                      586
+#define BATTLESTRINGS_COUNT                      600
 
 //// multichoice message IDs
 // switch in ability message
