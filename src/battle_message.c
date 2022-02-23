@@ -699,6 +699,29 @@ static const u8 sText_PkmnGotOverItsInfatuation[] = _("{B_SCR_ACTIVE_NAME_WITH_P
 
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
+    [STRINGID_STUFFCHEEKSCANTSELECT - 12] = sText_StuffCheeksCantSelect,
+    [STRINGID_ATTACKWEAKENEDBSTRONGWINDS - 12] = sText_AttackWeakenedByStrongWinds,
+    [STRINGID_MYSTERIOUSAIRCURRENTBLOWSON - 12] = sText_MysteriousAirCurrentBlowsOn,
+    [STRINGID_STRONGWINDSDISSIPATED - 12] = sText_StrongWindsDissipated,
+    [STRINGID_MYSTERIOUSAIRCURRENT - 12] = sText_MysteriousAirCurrent,
+    [STRINGID_NORELIEFROMHEAVYRAIN - 12] = sText_NoReliefFromHeavyRain,
+    [STRINGID_MOVEFIZZLEDOUTINTHEHEAVYRAIN - 12] = sText_MoveFizzledOutInTheHeavyRain,
+    [STRINGID_HEAVYRAINLIFTED - 12] = sText_HeavyRainLifted,
+    [STRINGID_HEAVYRAIN - 12] = sText_HeavyRain,
+    [STRINGID_EXTREMELYHARSHSUNLIGHTWASNOTLESSENED - 12] = sText_ExtremelyHarshSunlightWasNotLessened,
+    [STRINGID_MOVEEVAPORATEDINTHEHARSHSUNLIGHT - 12] = sText_MoveEvaporatedInTheHarshSunlight,
+    [STRINGID_EXTREMESUNLIGHTFADED - 12] = sText_ExtremeSunlightFaded,
+    [STRINGID_EXTREMELYHARSHSUNLIGHT - 12] = sText_ExtremelyHarshSunlight,
+    [STRINGID_ATTACKERBECAMEASHSPECIES - 12] = sText_AttackerBecameAshSpecies,
+    [STRINGID_ATTACKERBECAMEFULLYCHARGED - 12] = sText_AttackerBecameFullyCharged,
+    [STRINGID_HEALBLOCKEDNOMORE - 12] = sText_HealBlockedNoMore,
+    [STRINGID_TORMENTEDNOMORE - 12] = sText_TormentedNoMore,
+    [STRINGID_ATKGOTOVERINFATUATION - 12] = sText_AttackerGotOverInfatuation,
+    [STRINGID_EJECTBUTTONACTIVATE - 12] = sText_EjectButtonActivate,
+    [STRINGID_REDCARDACTIVATE - 12] = sText_RedCardActivate,
+    [STRINGID_PKMNBURNHEALED - 12] = sText_PkmnBurnHealed,
+    [STRINGID_STICKYBARBTRANSFER - 12] = sText_StickyBarbTransfer,
+    [STRINGID_ITEMCANNOTBEREMOVED - 12] = sText_ItemCannotBeRemoved,
     [STRINGID_PKMNGOTOVERITSINFATUATION - 12] = sText_PkmnGotOverItsInfatuation,
     [STRINGID_PKMNSHOOKOFFTHETAUNT - 12] = sText_PkmnShookOffTheTaunt,
     [STRINGID_MICLEBERRYACTIVATES - 12] = sText_MicleBerryActivates,
@@ -736,7 +759,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_AROMAVEILPROTECTED - 12] = sText_AromaVeilProtected,
     [STRINGID_SWEETVEILPROTECTED - 12] = sText_SweetVeilProtected,
     [STRINGID_FLOWERVEILPROTECTED - 12] = sText_FlowerVeilProtected,
-    [STRINGID_SAFETYGOOGLESPROTECTED - 12] = sText_SafetyGooglesProtected,
+    [STRINGID_SAFETYGOGGLESPROTECTED - 12] = sText_SafetyGogglesProtected,
     [STRINGID_SPECTRALTHIEFSTEAL - 12] = sText_SpectralThiefSteal,
     [STRINGID_BELCHCANTSELECT - 12] = sText_BelchCantUse,
     [STRINGID_TRAINER1LOSETEXT - 12] = sText_Trainer1LoseText,
@@ -1258,14 +1281,31 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_SCREENCLEANERENTERS - 12] = sText_ScreenCleanerActivates,
 };
 
+const u16 gMentalHerbCureStringIds[] = 
+{
+    [B_MSG_MENTALHERBCURE_INFATUATION] = STRINGID_ATKGOTOVERINFATUATION,
+    [B_MSG_MENTALHERBCURE_TAUNT]       = STRINGID_BUFFERENDS,
+    [B_MSG_MENTALHERBCURE_ENCORE]      = STRINGID_PKMNENCOREENDED,
+    [B_MSG_MENTALHERBCURE_TORMENT]     = STRINGID_TORMENTEDNOMORE,
+    [B_MSG_MENTALHERBCURE_HEALBLOCK]   = STRINGID_HEALBLOCKEDNOMORE,
+    [B_MSG_MENTALHERBCURE_DISABLE]     = STRINGID_PKMNMOVEDISABLEDNOMORE,
+};
+
 const u16 gTerrainStringIds[] =
 {
     STRINGID_TERRAINBECOMESMISTY, STRINGID_TERRAINBECOMESGRASSY, STRINGID_TERRAINBECOMESELECTRIC, STRINGID_TERRAINBECOMESPSYCHIC
 };
 
+const u16 gTerrainEndingStringIds[] = 
+{
+    STRINGID_MISTYTERRAINENDS, STRINGID_GRASSYTERRAINENDS, STRINGID_ELECTRICTERRAINENDS, STRINGID_PSYCHICTERRAINENDS
+};
+
 const u16 gTerrainPreventsStringIds[] =
 {
-    STRINGID_MISTYTERRAINPREVENTS, STRINGID_ELECTRICTERRAINPREVENTS, STRINGID_PSYCHICTERRAINPREVENTS
+    [B_MSG_TERRAINPREVENTS_MISTY]    = STRINGID_MISTYTERRAINPREVENTS,
+    [B_MSG_TERRAINPREVENTS_ELECTRIC] = STRINGID_ELECTRICTERRAINPREVENTS,
+    [B_MSG_TERRAINPREVENTS_PSYCHIC]  = STRINGID_PSYCHICTERRAINPREVENTS
 };
 
 const u16 gMagicCoatBounceStringIds[] =
@@ -2550,7 +2590,7 @@ void BufferStringBattle(u16 stringID)
         {
             if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
                 stringPtr = sText_LegendaryPkmnAppeared;
-            else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE) // interesting, looks like they had something planned for wild double battles
+            else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && IsValidForBattle(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler ^ BIT_FLANK]])) // interesting, looks like they had something planned for wild double battles
                 stringPtr = sText_TwoWildPkmnAppeared;
             else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
                 stringPtr = sText_WildPkmnAppearedPause;
@@ -2561,7 +2601,7 @@ void BufferStringBattle(u16 stringID)
     case STRINGID_INTROSENDOUT: // poke first send-out
         if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && IsValidForBattle(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler ^ BIT_FLANK]]))
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
                     stringPtr = sText_InGamePartnerSentOutZGoN;
@@ -2579,7 +2619,7 @@ void BufferStringBattle(u16 stringID)
         }
         else
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && IsValidForBattle(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler ^ BIT_FLANK]]))
             {
                 if (BATTLE_TWO_VS_ONE_OPPONENT)
                     stringPtr = sText_Trainer1SentOutTwoPkmn;
