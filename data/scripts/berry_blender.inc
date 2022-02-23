@@ -8,239 +8,147 @@
 
 .set NUM_OPPONENTS, VAR_0x8009
 
-BerryBlender_Text_WantToMakePokeblocks:
-	.string "Oh? Did you want to make some {POKEBLOCK}S\n"
-	.string "with this old-timer?$"
+BerryBlender_Text_WantToMakePokeblocks::
+   .string "哦？你是不是和这个老前辈\n想做点能量方块？$"
 
-BerryBlender_Text_Excellent:
-	.string "Excellent!$"
+BerryBlender_Text_Excellent::
+   .string "非常好！$"
 
-BerryBlender_Text_MadeOldTimerSad:
-	.string "Oh…\n"
-	.string "You've made this old-timer sad…$"
+BerryBlender_Text_MadeOldTimerSad::
+   .string "哦…\n你让这个老前辈很难过…$"
 
-BerryBlender_Text_KnowHowToMakePokeblocks:
-	.string "Do you know how to make a {POKEBLOCK}?$"
+BerryBlender_Text_KnowHowToMakePokeblocks::
+   .string "你知道怎么做能量方块？$"
 
-BerryBlender_Text_LetsBerryBlender:
-	.string "Let's get started, then!\p"
-	.string "Let's BERRY BLENDER!$"
+BerryBlender_Text_LetsBerryBlender::
+   .string "那么让我们开始吧！\p让我们混合树果！$"
 
-BerryBlender_Text_ExplainBerryBlending:
-	.string "Okay, a little explanation, then.\p"
-	.string "Oh, don't worry, it's quite simple.\p"
-	.string "When the BLENDER's arrow comes to\n"
-	.string "your marker, just press the A Button.\p"
-	.string "That's all you have to do.\n"
-	.string "You'll see how easy it is when you try.$"
+BerryBlender_Text_ExplainBerryBlending::
+   .string "好吧，那么小小解释一下。\p噢，别担心，很简单的。\p当那个混合机的箭头到达\n你的标志时，就按下A键。\p这就是你要做的。\n当你自己试的时候就知道有多简单了。$"
 
-BerryBlender_Text_DontHaveAnyBerries:
-	.string "Oh?\n"
-	.string "You don't have any BERRIES?\p"
-	.string "If you don't have any BERRIES,\n"
-	.string "you can't make any {POKEBLOCK}S.$"
+BerryBlender_Text_DontHaveAnyBerries::
+   .string "哦？\n你没有树果？\p如果你没有树果，\n你就不能做任何能量方块。$"
 
-BerryBlender_Text_CanHaveOneOfMyBerries:
-	.string "Well, that won't do at all now, will it?\p"
-	.string "If you don't mind leftovers, you can\n"
-	.string "have one of my BERRIES.\p"
-	.string "That way, we could make some {POKEBLOCK}S\n"
-	.string "together using the BERRY BLENDER.$"
+BerryBlender_Text_CanHaveOneOfMyBerries::
+   .string "好吧，那个什么都做不了，是吧。\p你可以用我的树果，\n如果不介意我剩下的话。\p这样的话，我们就可以一起用\n树果混合机做一些能量方块。$"
 
-BerryBlender_Text_DontHaveAnyBerriesToSpare:
-	.string "If I had some BERRIES left over,\n"
-	.string "I'd gladly give you one…\p"
-	.string "But, I don't have any to spare today.\n"
-	.string "We'll have to do this another time.$"
+BerryBlender_Text_DontHaveAnyBerriesToSpare::
+   .string "如果我还有一些树果留下的话，\n我很乐意给你一个…\p可是，今天我一个多余的都没有。\n我们得以后再做了。$"
 
-BerryBlender_Text_PokeblockCaseIsFull:
-	.string "But your {POKEBLOCK} CASE is full.\p"
-	.string "You should use some {POKEBLOCK}S before\n"
-	.string "you come see me again.$"
+BerryBlender_Text_PokeblockCaseIsFull::
+   .string "可是你的能量方块盒满了。\p你应该用掉些能量方块\n再来见我。$"
 
-BerryBlender_Text_DontHavePokeblockCase:
-	.string "But you don't have a {POKEBLOCK} CASE.\p"
-	.string "You should get a {POKEBLOCK} CASE and then\n"
-	.string "come see me.$"
+BerryBlender_Text_DontHavePokeblockCase::
+   .string "可是你都没有能量方块盒。\p你应该先有一个能量方块盒，\n然后再来见我。$"
 
-BerryBlender_Text_LetsGetBlendingAlready:
-	.string "Let's get blending already!$"
+BerryBlender_Text_LetsGetBlendingAlready::
+   .string "让我们混合吧！$"
 
-BerryBlender_Text_WhatKindOfPokeblockWillIGet:
-	.string "I wonder what kind of {POKEBLOCK} I'll get?\n"
-	.string "This is so exciting!$"
+BerryBlender_Text_WhatKindOfPokeblockWillIGet::
+   .string "我想知道会得到什么样的能量块。\n真是让人激动！$"
 
-BerryBlender_Text_WantToBlendPokeblocksWithUs:
-	.string "Hi, there! Did you want to blend some\n"
-	.string "{POKEBLOCK}S with us?$"
+BerryBlender_Text_WantToBlendPokeblocksWithUs::
+   .string "你好啊！\n你是想和我们混合一些树果？$"
 
-BerryBlender_Text_Okay:
-	.string "Okay!$"
+BerryBlender_Text_Okay::
+   .string "好啊！$"
 
-BerryBlender_Text_ThatsTooBad:
-	.string "That's too bad…\p"
-	.string "But we'll always be around whenever\n"
-	.string "you get the urge to blend!$"
+BerryBlender_Text_ThatsTooBad::
+   .string "真是太糟糕了…\p不过我们总是在这附近，\n无论什么时候你都可以找我们混合！$"
 
-BerryBlender_Text_KnowHowToMakePokeblocks2:
-	.string "Of course, you do know how to\n"
-	.string "blend {POKEBLOCK}S, don't you?$"
+BerryBlender_Text_KnowHowToMakePokeblocks2::
+   .string "你一定知道如何\n混合树果的是吧？$"
 
-BerryBlender_Text_LetsBerryBlender2:
-	.string "Let's get started, then!\p"
-	.string "Let's BERRY BLENDER!$"
+BerryBlender_Text_LetsBerryBlender2::
+   .string "那么让我们开始吧！\p让我们树果混合机！$"
 
-BerryBlender_Text_ExplainBerryBlending2:
-	.string "Okay!\n"
-	.string "Let me explain it to you!\p"
-	.string "When the spinning BLENDER's arrow\n"
-	.string "reaches your marker, just press\l"
-	.string "the A Button.\p"
-	.string "That's all it takes.\n"
-	.string "Pretty easy, don't you think?$"
+BerryBlender_Text_ExplainBerryBlending2::
+   .string "好的！\n让我解释给你听！\p当混合机的箭头转\n到你的标志时，\l就按下A键。\p就是这样。\n很简单吧，你说呢？$"
 
-BerryBlender_Text_DontHaveAnyBerries2:
-	.string "Oh, but wait a second here…\n"
-	.string "You don't have any BERRIES.\p"
-	.string "You can't make any {POKEBLOCK}S without\n"
-	.string "BERRIES…\p"
-	.string "We'll always be around whenever you\n"
-	.string "get hold of some BERRIES to blend.$"
+BerryBlender_Text_DontHaveAnyBerries2::
+   .string "哦，但是等一下…\n你都没有树果。\p要是没有树果的话，\n你可做不了能量方块…\p我们一直在这附近，只要你有\n树果就可以找我们混合。$"
 
-BerryBlender_Text_PokeblockCaseIsFull2:
-	.string "Oh, but wait a second here…\n"
-	.string "Your {POKEBLOCK} CASE is full.\p"
-	.string "You should use some {POKEBLOCK}S and\n"
-	.string "then come back.$"
+BerryBlender_Text_PokeblockCaseIsFull2::
+   .string "哦，但是等一下…\n你的能量方块盒满了。\p你应该用掉一些\n能量方块再回来。$"
 
-BerryBlender_Text_DontHavePokeblockCase2:
-	.string "Oh, but wait a second here…\n"
-	.string "You don't have a {POKEBLOCK} CASE.\p"
-	.string "You should get a {POKEBLOCK} CASE and\n"
-	.string "then come back.$"
+BerryBlender_Text_DontHavePokeblockCase2::
+   .string "哦，但是等一下…\n可是你都没有能量方块盒。\p你应该先有一个能量方块盒\n然后再回来。$"
 
 @ Unused
-BerryBlender_Text_MakePokeblocksWithOurGroup:
-	.string "Oh, hello! Did you want to make some\n"
-	.string "{POKEBLOCK}S with our little group?$"
+BerryBlender_Text_MakePokeblocksWithOurGroup::
+   .string "喔，你好！你想和我们小组\n一起做能量方块吗？$"
 
-BerryBlender_Text_OhDear:
-	.string "Oh, dear!$"
+BerryBlender_Text_OhDear::
+   .string "哦，天哪！$"
 
-BerryBlender_Text_LeftUsInShock:
-	.string "Oh, dear me…\p"
-	.string "You've left us in shock!$"
+BerryBlender_Text_LeftUsInShock::
+   .string "哦，天哪…\p你真让我们震惊！$"
 
-BerryBlender_Text_KnowHowToMakePokeblocks3:
-	.string "Naturally, you know how to make\n"
-	.string "{POKEBLOCK}S, don't you?$"
+BerryBlender_Text_KnowHowToMakePokeblocks3::
+   .string "你应该知道怎么做\n能量方块的吧？$"
 
-BerryBlender_Text_LetsBerryBlender3:
-	.string "Okay, dear!\n"
-	.string "Let's get started!\p"
-	.string "Let's BERRY BLENDER!$"
+BerryBlender_Text_LetsBerryBlender3::
+   .string "哦，天哪！\n那么让我们开始吧！\p让我们树果混合机！$"
 
-BerryBlender_Text_ExplainBerryBlending3:
-	.string "Oh, dear!\p"
-	.string "Then, I'll explain it to you nicely.\p"
-	.string "When the BLENDER's arrow spins to\n"
-	.string "your marker, press the A Button.\p"
-	.string "That's all it takes.\n"
-	.string "Isn't it simple?$"
+BerryBlender_Text_ExplainBerryBlending3::
+   .string "哦，天哪！\p那么我会好好地解释给你听。\p当混合机的箭头转\n到你的标志时，就按下A键。\p就是这样。\n很简单吧？$"
 
-BerryBlender_Text_DontHaveAnyBerries3:
-	.string "You don't have any BERRIES,\n"
-	.string "do you?\p"
-	.string "If you don't have any BERRIES,\n"
-	.string "you can't make any {POKEBLOCK}S.\p"
-	.string "We'll always be making {POKEBLOCK}S here,\n"
-	.string "so let's make some together when\l"
-	.string "you get a BERRY or two.$"
+BerryBlender_Text_DontHaveAnyBerries3::
+   .string "你没有树果，\n是吗？\p要是没有树果的话，\n你可做不了能量方块。\p我们会一直在这里做能量方块，\n所以当你有树果时\l我们一起做一些吧。$"
 
-BerryBlender_Text_PokeblockCaseIsFull3:
-	.string "Your {POKEBLOCK} CASE is full,\n"
-	.string "it looks like.\p"
-	.string "You should use some {POKEBLOCK}S up\n"
-	.string "and then come back.$"
+BerryBlender_Text_PokeblockCaseIsFull3::
+   .string "看起来你的能量方块盒\n满了。\p你应该用掉一些\n能量方块再回来。$"
 
-BerryBlender_Text_DontHavePokeblockCase3:
-	.string "You haven't gotten a {POKEBLOCK} CASE\n"
-	.string "yet, it looks like.\p"
-	.string "You need to get a {POKEBLOCK} CASE before\n"
-	.string "you come back.$"
+BerryBlender_Text_DontHavePokeblockCase3::
+   .string "看起来你都没有\n能量方块盒。\p你应该先有一个能量方块盒然后\n再回来。$"
 
-BerryBlender_Text_SetNewBlenderRecord:
-	.string "Okay! Today's going to be the day that\n"
-	.string "I set a new BLENDER speed record!$"
+BerryBlender_Text_SetNewBlenderRecord::
+   .string "好吧！今天将是\n我创造新的混合机速度的记录！$"
 
-BerryBlender_Text_LookGoodAtBlendingJoinUs:
-	.string "Oh, dear!\n"
-	.string "You look as if you're good at blending.\l"
-	.string "Would you like to join us?$"
+BerryBlender_Text_LookGoodAtBlendingJoinUs::
+   .string "哦，天哪！\n你好像很在行混合。\l愿意加入我们吗？？$"
 
-BerryBlender_Text_MakeDeliciousPokeblocks:
-	.string "I'm going to make delicious {POKEBLOCK}S\n"
-	.string "and make my POKéMON cuter.$"
+BerryBlender_Text_MakeDeliciousPokeblocks::
+   .string "我将做美味的能量方块\n让我的宝可梦变得更加可爱。$"
 
-BerryBlender_Text_SaveGameBeforeBerryBlenderLink:
-	.string "{POKEBLOCK}S will be made with your friends \n"
-	.string "from BERRIES in the BERRY BLENDER.\p"
-	.string "Is it okay to save the game before\n"
-	.string "linking with your friends?$"
+BerryBlender_Text_SaveGameBeforeBerryBlenderLink::
+   .string "将会和你的朋友一起把树果\n放入树果混合机中做出能量方块。\p要不要先记录然后\n再和你的朋友连线？$"
 
-BerryBlender_Text_SearchingForFriends:
-	.string "Searching for your friends…\n"
-	.string "… … B Button: Cancel$"
+BerryBlender_Text_SearchingForFriends::
+   .string "搜索你的朋友中…\n… … B键：取消$"
 
-BerryBlender_Text_Player1Arrived:
-	.string "{STR_VAR_1} arrived.$"
+BerryBlender_Text_Player1Arrived::
+   .string "{STR_VAR_1}到达。$"
 
-BerryBlender_Text_Player1And2Arrived:
-	.string "{STR_VAR_1} and {STR_VAR_2} arrived.$"
+BerryBlender_Text_Player1And2Arrived::
+   .string "{STR_VAR_1}和{STR_VAR_2}到达。$"
 
-BerryBlender_Text_AllPlayersArrived:
-	.string "{STR_VAR_1}, {STR_VAR_2}, and\n"
-	.string "{STR_VAR_3} arrived.$"
+BerryBlender_Text_AllPlayersArrived::
+   .string "{STR_VAR_1}，{STR_VAR_2}，和\n{STR_VAR_3}到达。$"
 
-BerryBlender_Text_NoBerriesLink:
-	.string "You have no BERRIES.\n"
-	.string "The BERRY BLENDER can't be used.$"
+BerryBlender_Text_NoBerriesLink::
+   .string "你没有树果。\n不能用树果混合机。$"
 
-BerryBlender_Text_PokeblockCaseIsFullLink:
-	.string "Your {POKEBLOCK} CASE is full.\n"
-	.string "The BERRY BLENDER can't be used.$"
+BerryBlender_Text_PokeblockCaseIsFullLink::
+   .string "你的能量方块盒满了。\n不能用树果混合机。$"
 
-BerryBlender_Text_DontHavePokeblockCaseLink:
-	.string "You don't have a {POKEBLOCK} CASE.\n"
-	.string "The BERRY BLENDER can't be used.$"
+BerryBlender_Text_DontHavePokeblockCaseLink::
+   .string "你没有能量方块盒。\n不能用树果混合机。$"
 
-BerryBlender_Text_LoveMakingPokeblocks:
-	.string "I love making {POKEBLOCK}S.\p"
-	.string "I always have some BERRIES with me.$"
+BerryBlender_Text_LoveMakingPokeblocks::
+   .string "我爱上做能量方块了。\p我总是在身上带着一些树果。$"
 
-BerryBlender_Text_MakePokeblocksUsingBerryBlender:
-	.string "If you'd like, we could make some\n"
-	.string "{POKEBLOCK}S together using the\l"
-	.string "BERRY BLENDER.$"
+BerryBlender_Text_MakePokeblocksUsingBerryBlender::
+   .string "如果你喜欢的话，\n我们可以一起用树果混合机\l做一些能量方块。$"
 
-BerryBlender_Text_DontHaveAnyBerriesHaveOne:
-	.string "Oh?\n"
-	.string "You don't have any BERRIES?\p"
-	.string "Well, that won't do at all now, will it?\p"
-	.string "If you don't mind leftovers, you can\n"
-	.string "have one of my BERRIES.$"
+BerryBlender_Text_DontHaveAnyBerriesHaveOne::
+   .string "哦？\n你还没有树果？\p那就什么都做不了。\p如果你不介意我剩下的，你可以\n从我这里选一个树果。$"
 
-BerryBlender_Text_UseItToMakePokeblocksTogether:
-	.string "We'll use it to make {POKEBLOCK}S together\n"
-	.string "using the BERRY BLENDER.$"
+BerryBlender_Text_UseItToMakePokeblocksTogether::
+   .string "我们一起用树果混合机\n加上它做能量方块。$"
 
-BerryBlender_Text_DontHaveAnyBerriesNoneToSpare:
-	.string "Oh?\n"
-	.string "You don't have any BERRIES?\p"
-	.string "If I had some left over, I'd gladly\n"
-	.string "give you one…\p"
-	.string "But, I don't have any to spare today.\n"
-	.string "Sorry about that.$"
+BerryBlender_Text_DontHaveAnyBerriesNoneToSpare::
+   .string "哦？\n你没有树果？\p如果我还有一些留下的话，\n我很乐意给你一个…\p可是，今天我一个多余的都没有。\n不好意思。$"
 
 BerryBlender_EventScript_BerryBlender1::
 	lockall
@@ -641,7 +549,7 @@ BerryBlender_EventScript_DoLinkBerryBlending:
 	fadescreen FADE_TO_BLACK
 	removeobject 240 @ Unclear where these local IDs come from,
 	removeobject 239 @ but presumably they'd be the 4 link players
-	removeobject 238 
+	removeobject 238
 	removeobject 237
 	special DoBerryBlending
 	waitstate

@@ -1,26 +1,20 @@
-SecretBase_Text_TreeCanBeClimbed:
-	.string "If some vines drop down, this tree can\n"
-	.string "be climbed.$"
+SecretBase_Text_TreeCanBeClimbed::
+   .string "如果有藤蔓垂下来，\n就可以爬到树上去了。$"
 
-SecretBase_Text_TreeUseSecretPower:
-	.string "If some vines drop down, this tree can\n"
-	.string "be climbed.\p"
-	.string "Use the SECRET POWER?$"
+SecretBase_Text_TreeUseSecretPower::
+   .string "如果有藤蔓垂下来，\n就可以爬到树上去了。\p要使用神秘力量吗？$"
 
-SecretBase_Text_VineDroppedDown:
-	.string "A thick vine dropped down!$"
+SecretBase_Text_VineDroppedDown::
+   .string "粗大的藤蔓垂了下来！$"
 
-SecretBase_Text_ClumpOfGrass:
-	.string "If this clump of grass can be moved,\n"
-	.string "it might be possible to go inside.$"
+SecretBase_Text_ClumpOfGrass::
+   .string "如果弄掉这丛草，\n就可以进去了。$"
 
-SecretBase_Text_ClumpUseSecretPower:
-	.string "If this clump of grass can be moved,\n"
-	.string "it might be possible to go inside.\p"
-	.string "Use the SECRET POWER?$"
+SecretBase_Text_ClumpUseSecretPower::
+   .string "如果弄掉这丛草，\n就可以进去了。\p要使用神秘力量吗？$"
 
-SecretBase_Text_DiscoveredSmallEntrance:
-	.string "Discovered a small entrance!$"
+SecretBase_Text_DiscoveredSmallEntrance::
+   .string "发现了小小的入口！$"
 
 	.include "data/text/secret_base_trainers.inc"
 
@@ -747,67 +741,47 @@ SecretBase_EventScript_CushionInteract::
 	special CheckInteractedWithFriendsCushionDecor
 	end
 
-SecretBase_Text_AllDecorationsWillBeReturned:
-	.string "All decorations and furniture in your\n"
-	.string "SECRET BASE will be returned to your PC.\p"
-	.string "Is that okay?$"
+SecretBase_Text_AllDecorationsWillBeReturned::
+   .string "秘密基地里的所有家具\n及装饰品都会回到电脑中，\p确定吗？$"
 
-SecretBase_Text_WantToRegisterSecretBase:
-	.string "Do you want to register\n"
-	.string "{STR_VAR_1}'s SECRET BASE?$"
+SecretBase_Text_WantToRegisterSecretBase::
+   .string "想要设置\n{STR_VAR_1}的秘密基地吗？$"
 
-SecretBase_Text_AlreadyRegisteredDelete:
-	.string "This data is already registered.\n"
-	.string "Would you like to delete it?$"
+SecretBase_Text_AlreadyRegisteredDelete::
+   .string "数据已经设置，\n要删除吗？$"
 
-SecretBase_Text_TooManyBasesDeleteSome:
-	.string "Up to 10 locations can be registered.\p"
-	.string "Delete a location if you want to\n"
-	.string "register another location.$"
+SecretBase_Text_TooManyBasesDeleteSome::
+   .string "最多能够设置10件物品，\p要设置其它物品必须\n先删除原有物品。$"
 
-SecretBase_Text_RegistrationCompleted:
-	.string "Registration completed.$"
+SecretBase_Text_RegistrationCompleted::
+   .string "登录完成。$"
 
-SecretBase_Text_DataUnregistered:
-	.string "Data has been unregistered.$"
+SecretBase_Text_DataUnregistered::
+   .string "数据已删除。$"
 
-SecretBase_Text_BootUpPC:
-	.string "{PLAYER} booted up the PC.$"
+SecretBase_Text_BootUpPC::
+   .string "{PLAYER}登录了电脑。$"
 
-SecretBase_Text_WhatWouldYouLikeToDo:
-	.string "What would you like to do?$"
+SecretBase_Text_WhatWouldYouLikeToDo::
+   .string "想要做什么？$"
 
-SecretBase_Text_RegistryInfo:
-	.string "Once registered, a SECRET BASE will not\n"
-	.string "disappear unless the other TRAINER\l"
-	.string "moves it to a different location.\p"
-	.string "If a SECRET BASE is deleted from the\n"
-	.string "registered list, another one may take\l"
-	.string "its place.\p"
-	.string "Up to ten SECRET BASE locations\n"
-	.string "may be registered.$"
+SecretBase_Text_RegistryInfo::
+   .string "一旦登录成功，除非训练师\n将其移动到其它地方，\l否则物品不会消失。\p如果将一件物品从登录列表中\n删除，那么另一件物品就\l可以取代它的位置。\p秘密基地最多可\n登录10件物品。$"
 
-SecretBase_Text_BattleTowerShield:
-	.string "A shield of {STR_VAR_2} that marks winning\n"
-	.string "{STR_VAR_1} times in a row at the BATTLE TOWER.$"
+SecretBase_Text_BattleTowerShield::
+   .string "一个记录在对战塔中连续\n胜利{STR_VAR_1}次的盾形{STR_VAR_2}。$"
 
-SecretBase_Text_ToyTV:
-	.string "A realistic toy TV. It could be easily\n"
-	.string "mistaken for the real thing.$"
+SecretBase_Text_ToyTV::
+   .string "一个仿真玩具电视，\n很容易与真品混淆。$"
 
-SecretBase_Text_SeedotTV:
-	.string "A toy TV shaped like a SEEDOT.\n"
-	.string "It looks ready to roll away on its own…$"
+SecretBase_Text_SeedotTV::
+   .string "一个橡实果形状的玩具电视，\n好像就要滚动着离开一样…$"
 
-SecretBase_Text_SkittyTV:
-	.string "A toy TV shaped like a SKITTY.\n"
-	.string "It looks ready to stroll away…$"
+SecretBase_Text_SkittyTV::
+   .string "一个向尾喵形状的玩具电视，\n好像就要溜走一样…$"
 
-SecretBase_Text_WouldYouLikeToMoveBases:
-	.string "You may only make one SECRET BASE.\p"
-	.string "Would you like to move from the SECRET\n"
-	.string "BASE near {STR_VAR_1}?$"
+SecretBase_Text_WouldYouLikeToMoveBases::
+   .string "只能拥有一个秘密基地，\p要从{STR_VAR_1}的秘密\n基地搬过来吗？$"
 
-SecretBase_Text_MovingCompletedUseSecretPower:
-	.string "Moving completed.\p"
-	.string "Would you like to use the SECRET POWER?$"
+SecretBase_Text_MovingCompletedUseSecretPower::
+   .string "搬动完成。\p要使用神秘力量吗？$"

@@ -301,145 +301,100 @@ EventScript_EggHatch::
 	releaseall
 	end
 
-Route117_Text_SeeWifeIfYoudLikeMeToRaiseMon:
-	.string "I'm the DAY-CARE MAN.\p"
-	.string "I help take care of the precious\n"
-	.string "POKéMON of TRAINERS.\p"
-	.string "If you'd like me to raise your POKéMON,\n"
-	.string "have a word with my wife.$"
+Route117_Text_SeeWifeIfYoudLikeMeToRaiseMon::
+   .string "我是抚养家的饲养爷爷。\p我会帮忙照顾训练师的那些\n珍贵的宝可梦。\p如果你想我照顾你的宝可梦，\n去和我老婆说吧。$"
 
-Route117_Text_DoYouWantEgg:
-	.string "Ah, it's you!\p"
-	.string "We were raising your POKéMON,\n"
-	.string "and my goodness, were we surprised!\p"
-	.string "Your POKéMON had an EGG!\p"
-	.string "We don't know how it got there,\n"
-	.string "but your POKéMON had it.\p"
-	.string "You do want it, yes?$"
+Route117_Text_DoYouWantEgg::
+   .string "啊，是你呀！\p我们一直在照顾你的宝可梦，\n我的女神呀，太让我们惊喜了！\p你的宝可梦有了一个蛋！\p我们并不知道详细情况，但是\n你的宝可梦的确给了我们一个惊喜。\p你很感兴趣，是吧？$"
 
-Route117_Text_YourMonIsDoingFine:
-	.string "Ah, it's you! Good to see you.\n"
-	.string "Your {STR_VAR_1}'s doing fine.$"
+Route117_Text_YourMonIsDoingFine::
+   .string "啊，是你呀！很高兴看到你。\n你的{STR_VAR_1}一直做的很好。$"
 
-Route117_Text_IllKeepIt:
-	.string "Well then, I'll keep it.\n"
-	.string "Thanks!$"
+Route117_Text_IllKeepIt::
+   .string "好的，我会照顾它的。\n谢谢！$"
 
-Route117_Text_YouHaveNoRoomForIt:
-	.string "You have no room for it…\n"
-	.string "Come back when you've made room.$"
+Route117_Text_YouHaveNoRoomForIt::
+   .string "你没有地方放它了…\n等你有空间的时候再来吧。$"
 
-Route117_Text_ReceivedEgg:
-	.string "{PLAYER} received the EGG from\n"
-	.string "the DAY-CARE MAN.$"
+Route117_Text_ReceivedEgg::
+   .string "{PLAYER}从饲养爷爷\n手里得到了蛋。$"
 
-Route117_Text_TakeGoodCareOfIt:
-	.string "Take good care of it.$"
+Route117_Text_TakeGoodCareOfIt::
+   .string "好好照顾它。$"
 
-Route117_Text_FriendlyWithOtherTrainersMon:
-	.string "By the way, about your {STR_VAR_1},\n"
-	.string "it seemed to be friendly with\l"
-	.string "{STR_VAR_2}'s {STR_VAR_3}.\p"
-	.string "I may even have seen it receiving\n"
-	.string "a piece of MAIL.$"
+Route117_Text_FriendlyWithOtherTrainersMon::
+   .string "顺便一提，关于你的{STR_VAR_1}，\n看起来它和\l{STR_VAR_2}的{STR_VAR_3}关系很好。\p我还看到它收到\n了一封信件。$"
 
 @ Unused
-Route117_Text_SeeWifeIfYouWantToPickUpMon:
-	.string "If you want to pick up your POKéMON,\n"
-	.string "have a word with my wife.$"
+Route117_Text_SeeWifeIfYouWantToPickUpMon::
+   .string "如果想取回你的宝可梦，\n就去和我老伴说一声。$"
 
-Route117_Text_YourMonsAreDoingFine:
-	.string "Ah, it's you! Your {STR_VAR_1} and\n"
-	.string "{STR_VAR_2} are doing fine.$"
+Route117_Text_YourMonsAreDoingFine::
+   .string "啊，是你呀！你的{STR_VAR_1}和\n{STR_VAR_2}都做的很好。$"
 
-Route117_Text_IWillKeepDoYouWantIt:
-	.string "I really will keep it.\n"
-	.string "You do want this, yes?$"
+Route117_Text_IWillKeepDoYouWantIt::
+   .string "我会照顾它的。\n你想要，是不是？$"
 
-Route117_PokemonDayCare_Text_WouldYouLikeUsToRaiseAMon:
-	.string "I'm the DAY-CARE LADY.\p"
-	.string "We can raise POKéMON for you.\p"
-	.string "Would you like us to raise one?$"
+Route117_PokemonDayCare_Text_WouldYouLikeUsToRaiseAMon::
+   .string "我是饲养婆婆。\p我们可以为你照顾宝可梦。\p想让我们照顾一只吗？$"
 
-Route117_PokemonDayCare_Text_WhichMonShouldWeRaise:
-	.string "Which POKéMON should we raise for\n"
-	.string "you?$"
+Route117_PokemonDayCare_Text_WhichMonShouldWeRaise::
+   .string "想让我们照顾\n哪一只宝可梦呢？$"
 
-Route117_PokemonDayCare_Text_WellRaiseYourMon:
-	.string "Fine, we'll raise your {STR_VAR_1}\n"
-	.string "for a while.\p"
-	.string "Come back for it later.$"
+Route117_PokemonDayCare_Text_WellRaiseYourMon::
+   .string "好的，我们会暂时\n照顾你的{STR_VAR_1}的。\p记得之后回来带走它。$"
 
-Route117_PokemonDayCare_Text_WeCanRaiseOneMore:
-	.string "We can raise two of your POKéMON.\n"
-	.string "Would you like us to raise one more?$"
+Route117_PokemonDayCare_Text_WeCanRaiseOneMore::
+   .string "我们可以照顾你的两只宝可梦。\n想再托管一只吗？$"
 
-Route117_PokemonDayCare_Text_HusbandWasLookingForYou:
-	.string "My husband was looking for you.$"
+Route117_PokemonDayCare_Text_HusbandWasLookingForYou::
+   .string "我的丈夫一直在找你。$"
 
-Route117_PokemonDayCare_Text_FineThenComeAgain:
-	.string "Oh, fine, then.\n"
-	.string "Come again.$"
+Route117_PokemonDayCare_Text_FineThenComeAgain::
+   .string "啊，这太好了。\n欢迎再次光临。$"
 
-Route117_PokemonDayCare_Text_NotEnoughMoney:
-	.string "You don't have enough money…$"
+Route117_PokemonDayCare_Text_NotEnoughMoney::
+   .string "你没有足够的钱了…$"
 
-Route117_PokemonDayCare_Text_TakeOtherOneBackToo:
-	.string "Will you take back the other one,\n"
-	.string "too?$"
+Route117_PokemonDayCare_Text_TakeOtherOneBackToo::
+   .string "你想把另一只\n也带走么？$"
 
-Route117_PokemonDayCare_Text_ComeAgain:
-	.string "Fine.\n"
-	.string "Come again.$"
+Route117_PokemonDayCare_Text_ComeAgain::
+   .string "好。\n欢迎再次光临。$"
 
-Route117_PokemonDayCare_Text_GoodToSeeYou:
-	.string "Ah, it's you! Good to see you.\n"
-	.string "Your POKéMON can only be doing good!$"
+Route117_PokemonDayCare_Text_GoodToSeeYou::
+   .string "啊，是你呀！很高兴见到你。\n你的宝可梦是做的最好的！$"
 
-Route117_PokemonDayCare_Text_YourMonHasGrownXLevels:
-	.string "By level, your {STR_VAR_1} has\n"
-	.string "grown by {STR_VAR_2}.$"
+Route117_PokemonDayCare_Text_YourMonHasGrownXLevels::
+   .string "因为等级足够，你的{STR_VAR_1}已经\n进化成{STR_VAR_2}。$"
 
-Route117_PokemonDayCare_Text_YourTeamIsFull:
-	.string "Your POKéMON team is full.\n"
-	.string "Make room, then come see me.$"
+Route117_PokemonDayCare_Text_YourTeamIsFull::
+   .string "你的宝可梦小队满了。\n去腾出些空间再来找我。$"
 
 @ Unused
-Route117_PokemonDayCare_Text_TakeBackWhichMon:
-	.string "Which POKéMON will you take back?$"
+Route117_PokemonDayCare_Text_TakeBackWhichMon::
+   .string "你想取回哪只宝可梦？$"
 
-Route117_PokemonDayCare_Text_ItWillCostX:
-	.string "If you want your {STR_VAR_1} back,\n"
-	.string "it will cost ¥{STR_VAR_2}.$"
+Route117_PokemonDayCare_Text_ItWillCostX::
+   .string "如果你想让你的{STR_VAR_1}回来，\n那要花费{STR_VAR_2}。$"
 
-Route117_PokemonDayCare_Text_HeresYourMon:
-	.string "Perfect!\n"
-	.string "Here's your POKéMON.$"
+Route117_PokemonDayCare_Text_HeresYourMon::
+   .string "成交！\n这是你的宝可梦。$"
 
-Route117_PokemonDayCare_Text_TookBackMon:
-	.string "{PLAYER} took back {STR_VAR_1} from\n"
-	.string "the DAY-CARE LADY.$"
+Route117_PokemonDayCare_Text_TookBackMon::
+   .string "{PLAYER}把{STR_VAR_1}从\n饲养婆婆那里拿回来了。$"
 
-Route117_PokemonDayCare_Text_YouHaveJustOneMon:
-	.string "Oh? But you have just one\n"
-	.string "POKéMON.\p"
-	.string "Come back another time.$"
+Route117_PokemonDayCare_Text_YouHaveJustOneMon::
+   .string "咦？你只有一只\n宝可梦呀。\p下次再来吧。$"
 
-Route117_PokemonDayCare_Text_TakeYourMonBack:
-	.string "Will you take your POKéMON back?$"
+Route117_PokemonDayCare_Text_TakeYourMonBack::
+   .string "想把你的宝可梦带回去吗？$"
 
-Route117_PokemonDayCare_Text_WhatWillYouBattleWith:
-	.string "If you leave me that POKéMON,\n"
-	.string "what will you battle with?\p"
-	.string "Come back another time.$"
+Route117_PokemonDayCare_Text_WhatWillYouBattleWith::
+   .string "如果你把这些宝可梦都留给我，\n那之后你用什么战斗？\p下次再来吧。$"
 
-Text_EggHatchHuh:
-	.string "Huh?$"
+Text_EggHatchHuh::
+   .string "哼？$"
 
-Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne:
-	.string "Huh?\n"
-	.string "Now, now.\p"
-	.string "If you leave that POKéMON with\n"
-	.string "me, you'll be left with just one.\p"
-	.string "You will be better off if you catch\n"
-	.string "some more, I dare say.$"
+Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne::
+   .string "哼？\n…，是啊。\p如果你留下那个宝可梦给\n我，你就只剩下一个了。\p你最好离开的时候再\n多抓点，我想说。$"
